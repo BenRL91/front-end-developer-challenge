@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types"
 
+// Talent holds all the data necessary to display a talent, the backgound position may need to be updated if the system for
+// rendering talent sprites changes in the future. e.g. the active talents are always 50px away from the inactive talents
 const Talent = (props) => {
     const bgPosition = props.active ? `${props.spriteX}px ${props.spriteY}px` : `${props.spriteX}px ${props.spriteY + 50}px`
     return(

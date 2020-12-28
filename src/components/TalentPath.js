@@ -3,6 +3,8 @@ import Talent from "./Talent";
 import sprites from "../assets/talent-icons-sprite.png";
 import PropTypes from "prop-types"
 
+// TalentPath is a component that receives props in order to display different talent
+// trees. The talents themselves are determined by the props and are displayed by the <Talent> component
 const TalentPath = (props) => {
     return(
     <div className="TalentPath">
