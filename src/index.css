@@ -26,17 +26,22 @@ li label {
 
 header {
   font-size: 1.7em;
-  background-color: rgba(61, 61, 61, 0.534);
-  color: #d4d1d1;
+  background-color: rgba(61, 61, 61, 0.41);
+  color: #ddd8d8;
   padding: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 60px; }
+  margin-bottom: 60px;
+  font-family: 'Merriweather Sans', sans-serif; }
 
 h2 {
   margin: 0;
   font-family: 'Inter', sans-serif;
+  color: #2d4051; }
+
+h2:first-child {
+  color: #ddd8d8;
   font-weight: 300; }
 
 .flex-container {
@@ -48,15 +53,13 @@ h2 {
 .centered-text {
   text-align: center; }
 
-.dark-gray {
-  color: #2d4051; }
-
 .TalentCalculator {
   max-width: 950px;
   padding: 25px;
   position: relative; }
 
-.TalentCalculator .bg-image {
+.TalentCalculator::before {
+  content: "";
   height: 100%;
   width: 100%;
   position: absolute;
@@ -90,10 +93,6 @@ h2 {
 .Talent:not(:last-child) {
   margin-right: 105px; }
 
-.Talent:hover {
-  background-position-y: 0px !important;
-  /* Possibly revise to not use an !important here*/ }
-
 .Talent:not(:last-child)::after {
   content: "";
   height: 12px;
@@ -103,8 +102,7 @@ h2 {
   top: 18px;
   background-color: #1a1d1f;
   border: 1px solid #1e2123;
-  z-index: -2;
-  /* Remove this later */ }
+  z-index: -2; }
 
 .Talent:not(:last-child).active::after {
   content: "";
@@ -115,8 +113,11 @@ h2 {
   position: absolute;
   left: 50px;
   top: 18px;
-  z-index: -2;
-  /* Remove this later */ }
+  z-index: -2; }
+
+.Talent:hover {
+  background-position-y: 0px !important;
+  /* Possibly revise to not use an !important here*/ }
 
 .Talent::before {
   content: "";
@@ -127,8 +128,7 @@ h2 {
   position: absolute;
   left: -3px;
   top: -3px;
-  z-index: -1;
-  /* Remove this later */ }
+  z-index: -1; }
 
 .Talent.active::before {
   content: "";
@@ -139,8 +139,7 @@ h2 {
   position: absolute;
   left: -3px;
   top: -3px;
-  z-index: -1;
-  /* Remove this later */ }
+  z-index: -1; }
 
 .PointTracker {
   color: #fefefe;

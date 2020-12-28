@@ -7,13 +7,17 @@ import { talentCalculatorReducer, initialState } from "../store/reducer";
 // along with callbacks to the child components
 const TalentCalculator = () => { 
     const [state, dispatch] = useReducer(talentCalculatorReducer, initialState);
-
-    function canSetActive(state, path, level, availablePoints) {
+    // canSetActive is a method that returns a boolean based on whether or not a talent may or may not be
+    // set to active
+    function canSetActive(state, path, level) {
+        // Set booleans for conditions based on whether or not the first talent in
+        // a given path is inactive, whether or not the talent immediately prior to the
+        // talent we're currently working with is active, whether or not the current talent itself is active,
+        // and whether or not the user has available points to spend
         const firstIsInactive = (level === 0 && !state.talents[path][0].active);
         const previousIsActive = (level > 0 && state.talents[path][level - 1].active);
         const talentIsInactive = (!state.talents[path][level].active)
         const hasAvailablePoints = (state.availablePoints > 0);
-        // Handle first talent
         if ((firstIsInactive || previousIsActive) && talentIsInactive && hasAvailablePoints) {
             return true;
         } else {
@@ -21,8 +25,12 @@ const TalentCalculator = () => {
         }
     }
 
+    // canSetActive is a method that returns a boolean based on whether or not a talent may or may not be
+    // set to inactive
     function canSetInactive(state, path, level) {
-        // Handle last talent
+        // Set booleans for conditions based on whether or not the last talent in
+        // a given path is active, whether or not the talent immediately prior to the
+        // talent we're currently working with is active, wheter or not the current talent itself is active
         const p = state[path];
         const lastIsActive = (level === p.length - 1 && p[p.length - 1].active);
         const previousIsActive = (level < p.length - 1 && !state[path][level + 1].active);
@@ -34,6 +42,8 @@ const TalentCalculator = () => {
         }
     }
 
+    // activateTalent dispatches an action to update the application state with the talent that needs
+    // to be set as active
     function activateTalent(path, level) {
         if (canSetActive(state, path, level)) {
             dispatch({type: 'SET_TALENT_ACTIVE', path, level})
@@ -45,6 +55,8 @@ const TalentCalculator = () => {
         };   
     }
 
+    // deactivateTalent dispatches an action to update the application state with the talent that needs
+    // to be set as inactive
     function deactivateTalent(path, level) {
         if (canSetInactive(state.talents, path, level)) {
             dispatch({type: 'SET_TALENT_INACTIVE', path, level})
@@ -55,7 +67,6 @@ const TalentCalculator = () => {
     }
     return(
     <div className="TalentCalculator">
-        <div className="bg-image"></div>
         <header className="centered-text">TitanStar Legends - Rune Mastery Loadout Talent Calculator 9000</header>
         <div className="flex-container">
             <ul>

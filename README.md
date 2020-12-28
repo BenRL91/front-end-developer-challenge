@@ -25,7 +25,7 @@ Code reviewers will be directed to pay special attention to the following:
 ## Rune Mastery Loadout Talent Calculator 9000
 Players of TitanStar Legends can spend talent points that they’ve collected on runes within a tree. We need to write a js application that simulates the rune tree within the game so players can replicate their in-game loadouts to share with the TitanStar Legends community.
 
-![Example](assets/example.png)
+![Example](src/assets/example.png)
 
 - Left click to add points.
 - Right click to remove points.
@@ -34,3 +34,7 @@ Players of TitanStar Legends can spend talent points that they’ve collected on
 - Displays current point total
 - The user must select the items in order.
     - For example: The user may not put a point in the cake without first having put points in the chevrons and the silverware (in that order).
+
+## Installation instructions
+- npm i
+- npm start

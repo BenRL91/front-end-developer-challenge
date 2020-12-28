@@ -1,3 +1,4 @@
+// Colors
 $light-font-color: #fefefe;
 $dark-font-color: #2d4051;
 $connectionSize: 110px;
@@ -6,13 +7,15 @@ $inactive-light-gray: #1e2123;
 $active-gray:  #313234;
 $active-light-gray: #393d3f;
 
-
+// Style resets and initial font
 * {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
     list-style: none;
 }
 
+// Because there is only one <ul> used in the application the ul selector has it's own rules
+// beyond margin and padding reset
 ul {
     margin: 0;
     padding: 0;
@@ -22,6 +25,8 @@ ul {
     align-items: center;
 }
 
+// Because there is only one set of <li> used in the application the li selector has it's own rules
+// beyond margin and padding reset
 li {
     margin: 30px 0;
     padding: 0;
@@ -36,23 +41,32 @@ li {
     }
 }
 
+// Only one header so we style it with the header selector
 header {
     font-size: 1.7em;
-    background-color: rgba(61, 61, 61, 0.534);
-    color: #d4d1d1;
+    background-color: rgba(61, 61, 61, 0.41);
+    color: #ddd8d8;
     padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 60px;
+    font-family: 'Merriweather Sans', sans-serif;
 }
 
+// h2 is only used twice in the <PointTracker> right now so we style them here
+// and make it easy for ourselves with the :first-child selector
 h2 {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    font-weight: 300;
+    color: $dark-font-color;
+    &:first-child{
+        color: #ddd8d8;
+        font-weight: 300;
+    }
 }
 
+// This class selector is used for layout management
 .flex-container {
     display: flex; 
     justify-content: space-between;
@@ -60,22 +74,19 @@ h2 {
     height: 100%;
 }
 
+// Simple helper class to center text for elements that we don't need to add
+// display: flex to
 .centered-text {
     text-align: center;
-}
-
-.dark-gray {
-    color: $dark-font-color;
-}
-
-.App {
 }
 
 .TalentCalculator {
     max-width: 950px;
     padding: 25px;
     position: relative;
-    .bg-image {
+    // This ::before pseudo-element creates the background image for the TalentCalculator
+    &::before {
+        content: "";
         height: 100%;
         width: 100%;
         position: absolute;
@@ -87,7 +98,7 @@ h2 {
         background-position: center;
         background-size: cover;
     }
-    
+    // This ::after element creates the inner gray border of the TalentCalculator
     &::after {
         content: "";
         height: calc(100% - 20px);
@@ -100,43 +111,56 @@ h2 {
     }
 }
 
+// All we had to add to <TalentPath was diplay: flex to get the layout we wanted
 .TalentPath {
     display: flex;
 }
 
+// Talent has a lot of style going on
 .Talent {
     height: 50px;
     width: 50px;
     background: url(./assets/talent-icons-sprite.png);
     position: relative;
+    // Everything but the last child has a margin to account for the space needed for the talent connections
     &:not(:last-child) {
         margin-right: 105px;
+        // Everything but the last child gets a ::after pseudo-element that displays the connection
+        // between two talents /* The active and inactive are both handled by different ::after elements */
+        &::after {
+            content: "";
+            height: 12px;
+            width: $connectionSize;
+            position: absolute;
+            left: 45px;
+            top: 18px;
+            background-color:$inactive-gray;
+            border: 1px solid $inactive-light-gray;
+            z-index: -2;
+        }
+        // Everything but the last child gets a ::after pseudo-element that displays the connection
+        // between two talents /* The active and inactive are both handled by different ::after elements */
+        &.active::after {
+            content: "";
+            height: 12px;
+            width:  $connectionSize;
+            border: 2px solid $active-light-gray;
+            background-color: $active-gray;
+            position: absolute;
+            left: 50px;
+            top: 18px;
+            z-index: -2;
+        }
     }
+    // When hovering we update the background position to the lightly colored sprite position
+    // the !important here is currently necessary to gain priority over the in-line styling set within
+    // <Talent>
     &:hover {
         background-position-y: 0px !important; /* Possibly revise to not use an !important here*/
     }
-    &:not(:last-child)::after {
-        content: "";
-        height: 12px;
-        width: $connectionSize;
-        position: absolute;
-        left: 45px;
-        top: 18px;
-        background-color:$inactive-gray;
-        border: 1px solid $inactive-light-gray;
-        z-index: -2; /* Remove this later */
-    }
-    &:not(:last-child).active::after {
-        content: "";
-        height: 12px;
-        width:  $connectionSize;
-        border: 2px solid $active-light-gray;
-        background-color: $active-gray;
-        position: absolute;
-        left: 50px;
-        top: 18px;
-        z-index: -2; /* Remove this later */
-    }
+
+    // The ::before pseudo-elements are created to display the background color gradient for active and inactive
+    // talents
     &::before {
         content: "";
         height: 56px;
@@ -146,8 +170,11 @@ h2 {
         position: absolute;
         left: -3px;
         top: -3px;
-        z-index: -1; /* Remove this later */
+        z-index: -1;
     }
+
+    // The ::before pseudo-elements are created to display the background color gradient for active and inactive
+    // talents
     &.active::before {
         content: "";
         height: 56px;
@@ -157,9 +184,11 @@ h2 {
         position: absolute;
         left: -3px;
         top: -3px;
-        z-index: -1; /* Remove this later */
+        z-index: -1;
     }
 }
+
+// The PointTracker just needed some basic styling
 .PointTracker {
     color: $light-font-color;
     border: 1px solid #101214;
@@ -173,7 +202,10 @@ h2 {
 }
 
 //Breakpoint at 920
-
+// Change which direction the talent paths flow
+// and with that some of the elements that were positioned left to right
+// now need to have some styles changed to be down to up
+// we handle that here
 @media only screen and (max-width: 920px) {
     header {
         margin-bottom: 10px;
@@ -231,6 +263,9 @@ h2 {
 
 
 // Breakpoint at 550
+// as we get even smaller we want to handle the font size for the header
+// as well as removing some of the extra space we added on the way down to this size via
+// default styles or other breakpoints
 @media only screen and (max-width: 550px) {
     .flex-container {
         display: block;
